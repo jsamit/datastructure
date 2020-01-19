@@ -17,16 +17,21 @@ public class RabinKarpAlgo {
 		int hash = calculateHash(dest);
 		int target = calculateHash(src.substring(0, dest.length()));
 		
-		for(int i=1; i<=src.length() - dest.length() + 1; i++) {
-			if(target == hash)
-				return true;
+		
+		if(target == hash)
+			return true;
+		
+		for(int i=1; i<src.length() - dest.length() + 1; i++) {
 			
 			target = 10 * (target - (int)Math.pow(10, dest.length()-1) * (src.charAt(i-1)-97 + 1)) + (src.charAt(i - 1 + dest.length()) - 97 + 1);
+			
+			if(target == hash)
+				return true;
 		}
 		return false;
 	}
 	public static void main(String[] args) {
 		
-		System.out.println(strstr("abcde","bcde"));
+		System.out.println(strstr("abcde","baca"));
 	}
 }
