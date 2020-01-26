@@ -1,3 +1,7 @@
+/*
+        Pre Order Traversal Iterative method
+*/
+
 public static void preOrder(Node root) {
         Stack<Node> st = new Stack<>();
 
