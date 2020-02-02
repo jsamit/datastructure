@@ -1,6 +1,25 @@
 package com.tree;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
+import java.util.TreeSet;
+
+class Pair<T,V> {
+	public T a;
+	public V b;
+	
+	public Pair(T a,V b) {
+		this.a = a;
+		this.b = b;
+	}
+}
 
 public class BinTree<T extends Number & Comparable<T>> {
 	
@@ -124,5 +143,78 @@ public class BinTree<T extends Number & Comparable<T>> {
 				}	
 			}
 		}
+	}
+	
+	public void levelOrder() {
+		Node<T> node = root;
+		Deque<Node<T>> deque = new ArrayDeque<>();
+		
+		deque.offerLast(node);
+		
+		while(!deque.isEmpty()) {
+			node = deque.pollFirst();
+			System.out.println(node.data);
+			
+			if(node.left != null)
+				deque.offerLast(node.left);
+			
+			if(node.right != null) 
+				deque.offerLast(node.right);
+		}
+	}
+	
+	public void verticalOrder() {
+		
+		Node<T> node = root;
+		
+		Map<Integer,List<Node<T>>> map = new HashMap<>();
+		
+		Deque<Pair<Node<T>,Integer>> deque = new ArrayDeque<>();
+		
+		List<Node<T>> list = new ArrayList<>();
+		
+		deque.offerFirst(new Pair<>(node,0));
+		list.add(node);
+		map.put(0, list);
+		
+		
+		while(!deque.isEmpty()) {
+			
+			Pair<Node<T>,Integer> pair = deque.pollFirst();
+			int hd = pair.b;
+			node = pair.a;
+			
+			if(node.left != null) {
+				
+				deque.offerLast(new Pair<>(node.left,hd-1));
+				
+				if(map.containsKey(hd-1)) {
+					list = map.get(hd-1);
+					list.add(node.left);
+					map.put(hd-1, list);
+				}
+				map.put(hd-1, list);
+			} else if(node.right != null){
+				
+				deque.offerLast(new Pair<>(node.right,hd-1));
+				
+				if(map.containsKey(hd+1)) {
+					list = map.get(hd+1);
+					list.add(node.left);
+					map.put(hd+1, list);
+				}
+				map.put(hd+1, list);
+			}
+		}
+		
+		Set<Integer> set = new TreeSet<>(map.keySet());
+		
+		for(Integer i : set) {
+			list = map.get(i);
+			for(Node<T> temp: list) {
+				System.out.println(temp.data);
+			}
+		}
+		
 	}
 }
