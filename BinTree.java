@@ -253,4 +253,31 @@ public class BinTree<T extends Number & Comparable<T>> {
 			}
 		}
 	}
+
+
+	public int height() {
+		Deque<Node<T>> deque = new ArrayDeque<>();
+		Node<T> temp = root;
+
+		deque.offerLast(temp);
+		int height = 0;
+		boolean yes = false;
+
+		while(!deque.isEmpty()) {
+			temp = deque.pollFirst();
+
+			if(temp.left != null) {
+				deque.offerLast(temp.left);
+				height++;
+				yes = true;
+			}
+			if(temp.right != null) {
+				deque.offerLast(temp.right);
+				if(!yes) height++;
+				yes = false;
+			}
+		}
+
+		return height;
+	}
 }
