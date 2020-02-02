@@ -2,7 +2,6 @@ package com.tree;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
@@ -225,5 +224,33 @@ public class BinTree<T extends Number & Comparable<T>> {
 			}
 		}
 		
+	}
+
+	public void diagonalOrder() {
+		Deque<Node<T>> deque = new ArrayDeque<>();
+		Node<T> temp = root;
+
+		deque.offerLast(temp);
+		deque.offerLast(new Node<>(null));
+
+		while(!deque.isEmpty()) {
+			temp = deque.pollFirst();
+
+			if(temp == null) {
+				deque.offerLast(new Node<>(null));
+				temp = deque.pollFirst();
+
+				if(temp == null)
+					break;
+			}
+
+			while(temp != null) {
+				if(temp.data != null) System.out.println(temp.data);
+
+				if(temp.left != null)
+					deque.offerLast(temp.left);
+				temp = temp.right;
+			}
+		}
 	}
 }
