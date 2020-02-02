@@ -280,4 +280,74 @@ public class BinTree<T extends Number & Comparable<T>> {
 
 		return height;
 	}
+
+	public int noOfLeaf() {
+		Deque<Node<T>> deque = new ArrayDeque<>();
+		Node<T> temp = root;
+		deque.offerLast(temp);
+		int count = 0;
+
+		if(root.left == null && root.right == null)
+			return 1;
+
+		while(!deque.isEmpty()) {
+			temp = deque.pollFirst();
+
+			if(temp.left != null)
+				deque.offerLast(temp.left);
+
+			if(temp.right != null)
+				deque.offerLast(temp.right);
+
+			if(temp.left == null && temp.right == null)
+				count++;
+		}
+
+		return count;
+	}
+
+	public int noOfTwoDegreeNode() {
+		Deque<Node<T>> deque = new ArrayDeque<>();
+		Node<T> temp = root;
+		deque.offerLast(temp);
+		int count = 0;
+
+		while(!deque.isEmpty()) {
+			temp = deque.pollFirst();
+
+			if(temp.left != null)
+				deque.offerLast(temp.left);
+
+			if(temp.right != null)
+				deque.offerLast(temp.right);
+
+			if(temp.left != null && temp.right != null)
+				count++;
+		}
+
+		return count;
+	}
+
+	public int noOfOneDegreeNode() {
+		Deque<Node<T>> deque = new ArrayDeque<>();
+		Node<T> temp = root;
+		deque.offerLast(temp);
+		int count = 0;
+
+		while(!deque.isEmpty()) {
+			temp = deque.pollFirst();
+
+			if(temp.left != null)
+				deque.offerLast(temp.left);
+
+			if(temp.right != null)
+				deque.offerLast(temp.right);
+
+			if((temp.left != null && temp.right == null) || (temp.left == null && temp.right != null))
+				count++;
+		}
+
+		return count;
+
+	}
 }
