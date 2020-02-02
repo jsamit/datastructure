@@ -189,21 +189,30 @@ public class BinTree<T extends Number & Comparable<T>> {
 				deque.offerLast(new Pair<>(node.left,hd-1));
 				
 				if(map.containsKey(hd-1)) {
-					list = map.get(hd-1);
-					list.add(node.left);
-					map.put(hd-1, list);
+					List<Node<T>> list2 = map.get(hd-1);
+					list2.add(node.left);
+					map.put(hd-1, list2);
+				} else {
+
+					List<Node<T>> list1 = new ArrayList<>();
+					list1.add(node.left);
+					map.put(hd-1, list1);
 				}
-				map.put(hd-1, list);
-			} else if(node.right != null){
+			}
+			if(node.right != null){
 				
-				deque.offerLast(new Pair<>(node.right,hd-1));
+				deque.offerLast(new Pair<>(node.right,hd+1));
 				
 				if(map.containsKey(hd+1)) {
-					list = map.get(hd+1);
-					list.add(node.left);
-					map.put(hd+1, list);
+					List<Node<T>> list2 = map.get(hd+1);
+					list2.add(node.left);
+					map.put(hd+1, list2);
 				}
-				map.put(hd+1, list);
+				else {
+					List<Node<T>> list1 = new ArrayList<>();
+					list1.add(node.right);
+					map.put(hd+1, list1);
+				}
 			}
 		}
 		
